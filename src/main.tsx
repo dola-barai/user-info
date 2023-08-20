@@ -7,11 +7,16 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import FirstPage from './components/FirstPage/FirstPage.tsx';
+import SecondPage from './components/SecondPage/SecondPage.tsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <FirstPage></FirstPage>
+  },
+  {
+    path: "/second",
+    element: <SecondPage></SecondPage>
   },
 ]);
 
