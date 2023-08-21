@@ -1,48 +1,39 @@
-import { useState } from "react";
-import Input from '@mui/material/Input';
-import { Form, Link } from "react-router-dom";
+import { useState } from 'react';
+import { Button, TextField, Card, CardContent, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const FirstPage = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+function FormPage() {
+    const navigate = useNavigate()
+    const [name, setName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
 
-  const handleSubmit = () => {
-    localStorage.setItem("name", name);
-    localStorage.setItem("phone", phone);
-    localStorage.setItem("email", email);
+    const handleSubmit = () => {
+        if (name && phoneNumber && email) {
+            localStorage.setItem('userDetails', JSON.stringify({ name, phoneNumber, email }));
+            navigate('/second');
+        } else {
+            alert('Please enter all details.');
+        }
+    };
 
-    const url = "/second";
-    if (!name || !phone || !email) {
-      return <Link to={"/"} />;
-    }
-    window.location.href = url;
-  }
-  return (
-    <div>
-      <Form onSubmit={handleSubmit}>
-        <Input
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        /> <br />
-        <Input
-          placeholder="Phone number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-        /> <br />
-        <Input
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button type="submit">Submit</button>
-      </Form>
-    </div>
-  );
-};
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+            <Card>
+                <CardContent>
+                    <Typography variant="h5" gutterBottom>
+                        Enter Your Details
+                    </Typography>
+                    <TextField label="Name" fullWidth value={name} onChange={(e) => setName(e.target.value)} style={{ marginTop: '1rem' }} />
+                    <TextField label="Phone Number" fullWidth value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ marginTop: '1rem' }} />
+                    <TextField label="Email" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} style={{ marginTop: '1rem' }} />
+                    <Button variant="contained" color="primary" onClick={handleSubmit} style={{ marginTop: '1rem' }}>
+                        Submit
+                    </Button>
+                </CardContent>
+            </Card>
+        </div>
+    );
+}
 
-export default FirstPage;
+export default FormPage;
